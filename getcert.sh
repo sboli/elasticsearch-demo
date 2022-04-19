@@ -1,0 +1,1 @@
+docker exec -it elasticsearch-demo_es01_1 cat /usr/share/elasticsearch/config/certs/ca/ca.crt > ca.crt 
