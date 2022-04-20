@@ -16,7 +16,8 @@ const client = new Client({
 });
 
 async function run() {
-  await Customers.createCustomers(client);
+  //   await Customers.createCustomers(client);
+  await Customers.listCustomers(client);
 }
 
 run().catch(console.log);
