@@ -1,0 +1,32 @@
+GET customers/_search
+{
+  "size": 10,
+  "runtime_mappings": {
+     "order_total": {
+      "type": "double",
+      "script": """
+      double total = 0;
+      if (doc.containsKey("orders")) {
+        for (HashMap it : doc["orders"].value) {
+          for (HashMap line : doc["lines"].value) {
+            total += line.get("price").value * line.get("quantity").value;
+          }
+        }
+      }
+      emit(total)
+      """
+    }
+  },
+  "query": {
+    "match": {
+      "email": "fistlast@acme.tld"
+    }
+  }, 
+  "aggs": {
+    "order_total": {
+      "sum": {
+        "field": "order_total"
+      }
+    }
+  }
+}
